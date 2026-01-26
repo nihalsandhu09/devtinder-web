@@ -1,14 +1,35 @@
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { BaseUrl } from "../utils/constant";
+import { removeUser } from "../store/userSlice";
 const Navbar = () => {
   const user = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   console.log(user);
 
+  const handleLogOut = async () => {
+    try {
+      const res = await axios.post(
+        BaseUrl + "/logout",
+        {}, // no body needed
+        { withCredentials: true }, // ✅ correct place
+      );
+      console.log(res.data);
+      dispatch(removeUser());
+      navigate("/login");
+      alert(res.data, "Logged out successfully");
+    } catch (error) {
+      console.log("LOGOUT ERROR 👉", error.response?.data);
+    }
+  };
   return (
     <div className="navbar bg-base-300 shadow-sm flex ">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">DEVTINDER🧑‍💻</a>
+        <Link to="/" className="btn btn-ghost text-xl">
+          DEVTINDER🧑‍💻
+        </Link>
       </div>
       <div className="flex-1">
         <ul className="flex item-center gap-5">
@@ -49,15 +70,15 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-10 w-52 p-2 shadow"
             >
               <Link to="/profile/view">
                 {" "}
                 <li>
-                  <a className="justify-between">
+                  <p className="justify-between">
                     Profile
                     <span className="badge">New</span>
-                  </a>
+                  </p>
                 </li>
               </Link>
 
@@ -65,7 +86,7 @@ const Navbar = () => {
                 <a>Settings</a>
               </li>
               <li>
-                <a>Logout</a>
+                <a onClick={handleLogOut}>Logout</a>
               </li>
             </ul>
           </div>
