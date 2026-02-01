@@ -1,16 +1,20 @@
 import { useState } from "react";
 import axios from "axios";
 import { BaseUrl } from "../utils/constant";
-
+import { useNavigate } from "react-router-dom";
 function Signup() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [about, setAbout] = useState("");
   const [skills, setSkills] = useState(""); // comma separated
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
+  const navigate = useNavigate();
 
   const handleSignup = async () => {
     setLoading(true);
@@ -26,6 +30,9 @@ function Signup() {
           password, // plain password (backend hashes it)
           about,
           skills: skills ? skills.split(",").map((s) => s.trim()) : [],
+          photoUrl,
+          gender,
+          age,
         },
         {
           withCredentials: true,
@@ -33,7 +40,7 @@ function Signup() {
       );
 
       alert("Signup successful ✅");
-      // navigate("/feed") later
+      navigate("/login");
     } catch (err) {
       setError(err.response?.data || "Signup failed");
     } finally {
@@ -83,7 +90,28 @@ function Signup() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-
+        <input
+          type="text"
+          className="input input-bordered w-full mt-4"
+          placeholder="AGE"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+        />
+        <input
+          type="text"
+          className="input input-bordered w-full mt-4"
+          placeholder="Gender"
+          value={gender}
+          onChange={(e) => setGender(e.target.value)}
+        />
+        <input
+          type="text"
+          name="photoUrl"
+          placeholder="Paste image URL here"
+          className="input input-bordered w-full mt-4"
+          value={photoUrl}
+          onChange={(e) => setPhotoUrl(e.target.value)}
+        />
         <textarea
           className="textarea textarea-bordered w-full mt-4"
           placeholder="About you"

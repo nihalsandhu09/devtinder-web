@@ -1,10 +1,11 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addFeed } from "../store/feedSlice";
+import UserCard from "./UserCard";
 const Feed = () => {
-  const [feed, setFeed] = useState([]);
-  const [currentUserIndex, setCurrentUserIndex] = useState(0);
-
+  const feed = useSelector((store) => store.feed);
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchFeed = async () => {
       try {
@@ -13,22 +14,23 @@ const Feed = () => {
         });
 
         console.log("FEED DATA 👉", res.data);
-        setFeed(res.data.data);
+        dispatch(addFeed(res.data.data));
+        console.log(feed);
       } catch (error) {
         console.log(error);
       }
     };
     fetchFeed();
   }, []);
-  const currentUser = feed[currentUserIndex];
 
-  if (!currentUser) {
-    return <h1>No User PRofile MAtch </h1>;
-  }
   return (
-    <div>
-      <h1>{currentUser.firstName}</h1>
-    </div>
+    feed && (
+      <div className="w-full">
+        <div className="flex justify-center mt-10">
+          <UserCard user={feed[0]} />
+        </div>
+      </div>
+    )
   );
 };
 
