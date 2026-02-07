@@ -64,7 +64,7 @@ const EditProfile = ({ user }) => {
   return (
     <>
       <div className="flex items-center justify-center">
-        <UserCard user={previewUser} />
+        <UserCard user={previewUser} showActions={false} />
         <div className="min-h-screen flex items-center justify-center px-4">
           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-8 w-full max-w-lg">
             <legend className="fieldset-legend text-lg font-semibold">
