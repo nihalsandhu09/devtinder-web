@@ -27,40 +27,40 @@ const Connections = () => {
   }, []);
 
   return (
-    <div className="max-w-3xl mx-auto mt-10">
-      <h1 className="text-3xl font-semibold mb-6">Connections</h1>
+    <div className="max-w-3xl mx-auto mt-10 px-4">
+      <h1 className="text-3xl font-semibold mb-6 ">Connections</h1>
 
-      <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         {connections.length === 0 ? (
           <p className="p-6 text-center text-gray-500">No connections yet</p>
         ) : (
           connections.map((connection) => (
             <div
               key={connection._id}
-              className="flex items-center gap-4 px-6 py-4 cursor-pointer hover:bg-gray-50 transition"
+              className="flex flex-col sm:flex-row sm:items-center gap-4 px-6 py-4 hover:bg-gray-50 transition"
             >
-              {/* Avatar */}
               <img
-                src={connection.photoUrl}
+                src={
+                  connection.photoUrl ||
+                  "https://randomuser.me/api/portraits/lego/1.jpg"
+                }
                 alt={connection.firstName}
                 className="w-12 h-12 rounded-full object-cover border"
               />
 
-              {/* Text */}
               <div className="flex-1">
                 <p className="font-medium text-gray-900">
                   {connection.firstName} {connection.lastName}
                 </p>
-                <p className="text-sm text-gray-500 truncate max-w-md">
-                  {connection.gender}
-                </p>
-                <p className="text-sm text-gray-500 truncate max-w-md">
+                <p className="text-sm text-gray-500">{connection.gender}</p>
+                <p className="text-sm text-gray-500 truncate">
                   {connection.about || "No bio available"}
                 </p>
               </div>
 
-              {/* Right arrow (chat hint) */}
-              <span className="text-gray-400 text-xl">›</span>
+              <span className="text-gray-400 text-xl self-end sm:self-auto">
+                ›
+              </span>
             </div>
           ))
         )}

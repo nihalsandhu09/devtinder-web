@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "../store/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BaseUrl } from "../utils/constant";
 const Login = () => {
   const [emailId, setEmailId] = useState("");
@@ -32,53 +32,50 @@ const Login = () => {
     }
   };
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <fieldset
-        className="
-      fieldset
-      bg-base-200
-      border-base-300
-      rounded-box
-      border
-      p-10
-      w-full
-      max-w-md
-    "
-      >
-        <legend className="fieldset-legend text-lg font-bold">Login</legend>
+    <div className="flex items-center justify-center py-12 px-4 mt-5">
+      <div className="w-full max-w-md bg-base-200 border border-base-300 rounded-2xl p-6 sm:p-10 shadow-lg">
+        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
 
-        <label className="label">
-          <span className="label-text text-lg">Email </span>
-        </label>
+        {/* Email */}
+        <div className="mb-4">
+          <label className="block mb-2 font-medium">Email</label>
 
-        <input
-          type="email"
-          className="input input-bordered w-full text-lg"
-          value={emailId}
-          onChange={(e) => {
-            setEmailId(e.target.value);
-          }}
-        />
+          <input
+            type="email"
+            className="input input-bordered w-full"
+            value={emailId}
+            onChange={(e) => setEmailId(e.target.value)}
+          />
+        </div>
 
-        <label className="label mt-4 text-lg">
-          <span className="label-text">Password</span>
-        </label>
-        <input
-          type="password"
-          className="input input-bordered w-full text-lg"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <p className="text-red 500">{error} </p>
-        <button
-          className="btn btn-neutral w-full mt-6 text-lg font-bold"
-          onClick={handleLogin}
-        >
+        {/* Password */}
+        <div className="mb-4">
+          <label className="block mb-2 font-medium">Password</label>
+
+          <input
+            type="password"
+            className="input input-bordered w-full"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+
+        {/* Error */}
+        {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+
+        {/* Button */}
+        <button className="btn btn-neutral w-full mt-2" onClick={handleLogin}>
           Login
         </button>
-      </fieldset>
+
+        {/* Signup */}
+        <p className="text-sm mt-6 text-center">
+          New User?{" "}
+          <Link to="/signup" className="text-primary font-semibold">
+            Sign Up
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };

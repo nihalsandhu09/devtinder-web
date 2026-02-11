@@ -20,10 +20,11 @@ const RequestCard = ({ request }) => {
     }
   };
   return (
-    <div className="border rounded-lg p-4 shadow-sm">
-      <div className="flex justify-between items-start">
+    <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
         <div>
-          <h2 className="text-lg font-semibold">
+          <h2 className="text-lg sm:text-xl font-semibold text-black">
             {fromUserId.firstName} {fromUserId.lastName}
           </h2>
 
@@ -32,40 +33,42 @@ const RequestCard = ({ request }) => {
           </p>
         </div>
 
-        <span className="text-sm px-2 py-1 rounded bg-yellow-100 text-yellow-800">
+        <span className="self-start sm:self-auto text-xs px-3 py-1 rounded-full bg-yellow-100 text-yellow-800">
           {status}
         </span>
       </div>
 
-      <p className="mt-3 text-gray-700">{fromUserId.about}</p>
+      {/* About */}
+      {fromUserId.about && (
+        <p className="mt-3 text-gray-700 text-sm">{fromUserId.about}</p>
+      )}
 
       {/* Skills */}
-      <div className="mt-3 flex gap-2 flex-wrap">
-        {fromUserId.skills.map((skill, index) => (
-          <span
-            key={index}
-            className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded"
-          >
-            {skill}
-          </span>
-        ))}
-      </div>
+      {Array.isArray(fromUserId.skills) && fromUserId.skills.length > 0 && (
+        <div className="mt-3 flex gap-2 flex-wrap">
+          {fromUserId.skills.map((skill, index) => (
+            <span
+              key={index}
+              className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* Actions */}
-      <div className="mt-4 flex gap-3">
+      <div className="mt-5 flex flex-col sm:flex-row gap-3">
         <button
-          className="px-4 py-2 bg-green-600 text-white rounded"
-          onClick={() => {
-            reviewRequest("accepted", request._id);
-          }}
+          className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+          onClick={() => reviewRequest("accepted", request._id)}
         >
           Accept
         </button>
+
         <button
-          className="px-4 py-2 bg-gray-300 rounded"
-          onClick={() => {
-            reviewRequest("rejected", request._id);
-          }}
+          className="w-full sm:w-auto px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition"
+          onClick={() => reviewRequest("rejected", request._id)}
         >
           Ignore
         </button>

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { BaseUrl } from "../utils/constant";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
 function Signup() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -21,7 +22,7 @@ function Signup() {
     setError("");
 
     try {
-      await axios.post(
+      const res = await axios.post(
         BaseUrl + "/signup",
         {
           firstName,
@@ -38,9 +39,11 @@ function Signup() {
           withCredentials: true,
         },
       );
+      console.log(res);
 
       alert("Signup successful ✅");
-      navigate("/login");
+
+      return navigate("/login");
     } catch (err) {
       setError(err.response?.data || "Signup failed");
     } finally {
@@ -49,15 +52,14 @@ function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-8 w-full max-w-lg">
-        <legend className="fieldset-legend text-lg font-semibold">
-          Sign Up
-        </legend>
+    <div className="flex items-center justify-center py-12 px-4">
+      <div className="w-full max-w-2xl bg-base-200 border border-base-300 rounded-2xl p-6 sm:p-10 shadow-lg">
+        <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
 
-        {error && <div className="alert alert-error mb-4">{error}</div>}
+        {error && <div className="alert alert-error mb-4 text-sm">{error}</div>}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Name Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <input
             type="text"
             className="input input-bordered w-full"
@@ -75,6 +77,7 @@ function Signup() {
           />
         </div>
 
+        {/* Email */}
         <input
           type="email"
           className="input input-bordered w-full mt-4"
@@ -83,6 +86,7 @@ function Signup() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
+        {/* Password */}
         <input
           type="password"
           className="input input-bordered w-full mt-4"
@@ -90,28 +94,36 @@ function Signup() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
+        {/* Age & Gender */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+          <input
+            type="number"
+            className="input input-bordered w-full"
+            placeholder="Age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+          />
+
+          <input
+            type="text"
+            className="input input-bordered w-full"
+            placeholder="Gender"
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+          />
+        </div>
+
+        {/* Photo URL */}
         <input
           type="text"
-          className="input input-bordered w-full mt-4"
-          placeholder="AGE"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-        />
-        <input
-          type="text"
-          className="input input-bordered w-full mt-4"
-          placeholder="Gender"
-          value={gender}
-          onChange={(e) => setGender(e.target.value)}
-        />
-        <input
-          type="text"
-          name="photoUrl"
-          placeholder="Paste image URL here"
+          placeholder="Profile Image URL"
           className="input input-bordered w-full mt-4"
           value={photoUrl}
           onChange={(e) => setPhotoUrl(e.target.value)}
         />
+
+        {/* About */}
         <textarea
           className="textarea textarea-bordered w-full mt-4"
           placeholder="About you"
@@ -119,6 +131,7 @@ function Signup() {
           onChange={(e) => setAbout(e.target.value)}
         />
 
+        {/* Skills */}
         <input
           type="text"
           className="input input-bordered w-full mt-4"
@@ -127,6 +140,7 @@ function Signup() {
           onChange={(e) => setSkills(e.target.value)}
         />
 
+        {/* Button */}
         <button
           className="btn btn-primary w-full mt-6"
           onClick={handleSignup}
@@ -134,7 +148,15 @@ function Signup() {
         >
           {loading ? "Creating account..." : "Sign Up"}
         </button>
-      </fieldset>
+
+        {/* Login Redirect */}
+        <p className="text-sm mt-6 text-center">
+          Already have an account?{" "}
+          <Link to="/login" className="text-primary font-semibold">
+            Login
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

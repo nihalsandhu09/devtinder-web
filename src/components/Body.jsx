@@ -20,7 +20,7 @@ const Body = () => {
       console.log(res);
       dispatch(addUser(res.data));
     } catch (error) {
-      if (error.status === 401) {
+      if (error.response?.status === 401) {
         navigate("/login");
       }
 
@@ -32,9 +32,11 @@ const Body = () => {
   }, []);
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col bg-base-100">
       <Navbar />
-      <Outlet />
+      <main className="flex-1 w-full px-4 sm:px-6 md:px-10 lg:px-20 py-6">
+        <Outlet />
+      </main>
       <Footer />
     </div>
   );

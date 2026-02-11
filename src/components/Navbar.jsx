@@ -26,12 +26,12 @@ const Navbar = () => {
   };
   return (
     <div className="navbar bg-base-200 shadow-sm flex ">
-      <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">
+      <div className="flex-1 text-lg sm:text-xl font-bold">
+        <Link to="/" className="text-lg sm:text-xl font-bold">
           DEVTINDER🧑‍💻
         </Link>
       </div>
-      <div className="flex-1">
+      <div className="flex-1 hidden md:flex gap-6 items-center">
         <ul className="flex item-center gap-5">
           <Link to="/login">
             {" "}
@@ -44,11 +44,11 @@ const Navbar = () => {
           </Link>
         </ul>
       </div>
-      <div className="flex gap-2 item-center">
+      <div className="flex gap-2 items-center">
         <input
           type="text"
           placeholder="Search"
-          className="input input-bordered w-24 md:w-auto p-2"
+          className="input input-bordered hidden sm:block w-32 md:w-48"
         />
         {user && (
           <div className="dropdown dropdown-end mx-5 flex items-center gap-5">
@@ -56,15 +56,16 @@ const Navbar = () => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar"
+              className="flex items-center gap-2 cursor-pointer"
             >
-              <div className="w-10 rounded-full">
+              <div className="w-10 h-10 rounded-full overflow-hidden">
                 <img
-                  alt="Tailwind CSS Navbar component"
+                  alt="Profile"
                   src={
                     user.photoUrl ||
                     "https://randomuser.me/api/portraits/lego/1.jpg"
                   }
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>

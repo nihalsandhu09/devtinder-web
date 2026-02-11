@@ -21,7 +21,7 @@ const UserCard = ({ user, showActions = true }) => {
 
   if (!user) return null;
   return (
-    <div className="card w-96 bg-base-300 shadow-xl">
+    <div className="card w-full max-w-sm mx-auto bg-base-300 shadow-xl">
       {/* Image */}
       <figure className="px-4 pt-4">
         <img
@@ -29,24 +29,26 @@ const UserCard = ({ user, showActions = true }) => {
             user.photoUrl || "https://randomuser.me/api/portraits/lego/1.jpg"
           }
           alt="profile"
-          className="rounded-xl h-64 w-full object-cover"
+          className="rounded-xl h-56 sm:h-64 w-full object-cover"
         />
       </figure>
 
       {/* Body */}
-      <div className="card-body">
-        <h2 className="card-title text-xl">
+      <div className="card-body p-4 sm:p-6">
+        <h2 className="card-title text-lg sm:text-xl">
           {user.firstName} {user.lastName}
         </h2>
-        <h2>
+        <h2 className="text-sm sm:text-base opacity-80">
           {user.age} {user.gender}
         </h2>
-        {user.about && <p className="text-sm opacity-80">{user.about}</p>}
+        {user.about && (
+          <p className="text-sm opacity-80 mt-2 line-clamp-3">{user.about}</p>
+        )}
 
         {Array.isArray(user.skills) && user.skills.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-2">
             {user.skills.map((skill, index) => (
-              <span key={index} className="">
+              <span key={index} className=" text-xs sm:text-sm opacity-80">
                 {skill}
               </span>
             ))}

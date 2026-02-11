@@ -31,16 +31,20 @@ const Requests = () => {
     fetchRequest();
   }, []);
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Connection Requests</h1>
+    <div className="max-w-3xl mx-auto mt-10 px-4">
+      <h1 className="text-3xl font-semibold mb-6 ">Connection Requests</h1>
 
-      {requests.length === 0 && <p>No pending requests</p>}
-
-      <div className="space-y-4">
-        {requests.map((req) => (
-          <RequestCard key={req._id} request={req} />
-        ))}
-      </div>
+      {requests.length === 0 ? (
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
+          <p className="text-gray-500">No pending requests</p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {requests.map((req) => (
+            <RequestCard key={req._id} request={req} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -22,11 +22,17 @@ const Feed = () => {
     };
     fetchFeed();
   }, []);
-
+  if (!feed || feed.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh] text-gray-500 text-center">
+        <p className="text-lg sm:text-xl">No users in your feed right now</p>
+      </div>
+    );
+  }
   return (
     feed && (
-      <div className="w-full">
-        <div className="flex justify-center mt-10">
+      <div className="max-w-7xl mx-auto py-8">
+        <div className="flex justify-center">
           <UserCard user={feed[0]} />
         </div>
       </div>

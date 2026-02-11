@@ -63,17 +63,20 @@ const EditProfile = ({ user }) => {
   };
   return (
     <>
-      <div className="flex items-center justify-center">
-        <UserCard user={previewUser} showActions={false} />
-        <div className="min-h-screen flex items-center justify-center px-4">
-          <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-8 w-full max-w-lg">
-            <legend className="fieldset-legend text-lg font-semibold">
+      <div className="max-w-7xl mx-auto py-12 px-4">
+        <div className="flex flex-col lg:flex-row gap-10 items-start justify-center">
+          {/* FORM SECTION */}
+          <div className="w-full max-w-xl bg-base-200 border border-base-300 rounded-2xl p-6 sm:p-8 shadow-lg">
+            <h2 className="text-2xl font-bold mb-6 text-center lg:text-left">
               Edit Profile
-            </legend>
+            </h2>
 
-            {error && <div className="alert alert-error mb-4">{error}</div>}
+            {error && (
+              <div className="alert alert-error mb-4 text-sm">{error}</div>
+            )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Name */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
                 type="text"
                 className="input input-bordered w-full"
@@ -90,21 +93,25 @@ const EditProfile = ({ user }) => {
                 onChange={(e) => setLastName(e.target.value)}
               />
             </div>
-            <input
-              type="text"
-              className="input input-bordered w-full mt-4"
-              placeholder="AGE"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-            />
 
-            <input
-              type="text"
-              className="input input-bordered w-full mt-4"
-              placeholder="Gender"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-            />
+            {/* Age + Gender */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+              <input
+                type="number"
+                className="input input-bordered w-full"
+                placeholder="Age"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+              />
+
+              <input
+                type="text"
+                className="input input-bordered w-full"
+                placeholder="Gender"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              />
+            </div>
 
             <textarea
               className="textarea textarea-bordered w-full mt-4"
@@ -120,28 +127,35 @@ const EditProfile = ({ user }) => {
               value={skills}
               onChange={(e) => setSkills(e.target.value)}
             />
+
             <input
               type="text"
-              name="photoUrl"
-              placeholder="Paste image URL here"
               className="input input-bordered w-full mt-4"
+              placeholder="Photo URL"
               value={photoUrl}
               onChange={(e) => setPhotoUrl(e.target.value)}
             />
+
             <button
               className="btn btn-primary w-full mt-6"
               onClick={saveProfile}
             >
-              SAVE
+              Save Changes
             </button>
-          </fieldset>
+          </div>
+
+          {/* PREVIEW SECTION */}
+          <div className="w-full max-w-sm mx-auto lg:mx-0">
+            <UserCard user={previewUser} showActions={false} />
+          </div>
         </div>
       </div>
 
+      {/* TOAST */}
       {showToast && (
         <div className="toast toast-top toast-center">
           <div className="alert alert-success">
-            <span>profile saved successfully.</span>
+            <span>Profile saved successfully.</span>
           </div>
         </div>
       )}
